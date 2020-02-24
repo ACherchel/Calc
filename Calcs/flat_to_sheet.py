@@ -68,11 +68,11 @@ def Request_Flat_Sheet(lenght_order, widht_order, size1, size2):
     variant_cut_direct = variant_cut[0:3]
     variant_cut_revers = variant_cut[3:]
 
-    print('variant_cut', variant_cut)
+    # print('variant_cut', variant_cut)
     for i in variant_cut:
         if i != None and isinstance(i, list): offcut.append(i)
         if i != None and isinstance(i, int): numbers.append(i)
-    print('offcut ', offcut , ' numbers aooend ', numbers)
+    # print('offcut ', offcut , ' numbers aooend ', numbers)
 
     for i in offcut[:2]:
         vid = 'direct'
@@ -94,7 +94,7 @@ def Request_Flat_Sheet(lenght_order, widht_order, size1, size2):
                         offcut_app.append(i)
                 offcut_app.append(vid)
             turn = True
-    print('offcut app ' , offcut_app)
+    # print('offcut app ' , offcut_app)
 
 
     # print('offcur1 ' , offcut_cur1)
@@ -146,19 +146,15 @@ def Request_Flat_Sheet(lenght_order, widht_order, size1, size2):
     if offcut_app   and 'direct' in offcut_app:
         pattern_cut_list = [offcut[:2], offcut_app[:2]]
 
-    print (offcut_app)
+    # print (offcut_app)
     if offcut_app:
         if 'revers' in offcut_app:
-            print (' helow')
+            # print (' helow')
             pattern_cut_list = [offcut[2:4], offcut_app[2:4]]
 
     if turn: pattern_cut_list.append('turn')
 
     print('pattern ', pattern_cut_list)
-
-
-
-
 
     return number_parts, offcuts_all
 
@@ -167,13 +163,22 @@ def calc():
     lenght_order, widht_order = 600, 420
     size1, size2 = 1050, 930
     t = Request_Flat_Sheet(lenght_order, widht_order, size1, size2)
-    for i in range (100,900, 100):
-        lenght_order = i
-        for k in range (100,900,100):
-            widht_order= k
-            t= Request_Flat_Sheet(lenght_order, widht_order, size1, size2)
-            print(lenght_order, widht_order, size1, size2, t)
+    # for i in range (100,900, 100):
+    #     lenght_order = i
+    #     for k in range (100,900,100):
+    #         widht_order= k
+    #         t= Request_Flat_Sheet(lenght_order, widht_order, size1, size2)
+    #         print(lenght_order, widht_order, size1, size2, t)
     print(lenght_order, widht_order, size1, size2, t)
 
 
 calc()
+
+# if __name__ == '__main__':
+#
+#     size1 = int(input('Original sheet size1  '))
+#     size2 = int(input('Original sheet size2  '))
+#     lenght_order = int(input('lenght order:  '))
+#     widht_order = int(input('widht_order:  '))
+#
+#     t = Request_Flat_Sheet(lenght_order, widht_order, size1, size2)
