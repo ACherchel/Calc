@@ -167,12 +167,12 @@ def calc():
     lenght_order, widht_order = 600, 420
     size1, size2 = 1050, 930
     t = Request_Flat_Sheet(lenght_order, widht_order, size1, size2)
-    # for i in range (100,900, 100):
-    #     lenght_order = i
-    #     for k in range (100,900,100):
-    #         widht_order= k
-    #         t= Request_Flat_Sheet(lenght_order, widht_order, size1, size2)
-    #         print(lenght_order, widht_order, size1, size2, t)
+    for i in range (100,900, 100):
+        lenght_order = i
+        for k in range (100,900,100):
+            widht_order= k
+            t= Request_Flat_Sheet(lenght_order, widht_order, size1, size2)
+            print(lenght_order, widht_order, size1, size2, t)
     print(lenght_order, widht_order, size1, size2, t)
 
 
