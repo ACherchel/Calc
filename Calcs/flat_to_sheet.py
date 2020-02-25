@@ -53,7 +53,7 @@ def Cut_Flat_to_Sheet(size_flat1, size_flat_2, size_order1, size_order_2):
 
 
 def Request_Flat_Sheet(lenght_order, widht_order, size1, size2):
-    global pattern_cut_list
+    pattern_cut_list = []
     numbers = []
     offcuts_all = []
     offcut = []
@@ -63,23 +63,22 @@ def Request_Flat_Sheet(lenght_order, widht_order, size1, size2):
     number_parts_app1 = 0
     number_parts_app2 = 0
     turn = None
+    # number_parts = 0
 
     variant_cut = Cut_Flat_to_Sheet(size1, size2, lenght_order, widht_order)
-    variant_cut_direct = variant_cut[0:3]
-    variant_cut_revers = variant_cut[3:]
+    # variant_cut_direct = variant_cut[0:3]
+    # variant_cut_revers = variant_cut[3:]
 
     # print('variant_cut', variant_cut)
     for i in variant_cut:
         if i != None and isinstance(i, list): offcut.append(i)
         if i != None and isinstance(i, int): numbers.append(i)
-    # print('offcut ', offcut , ' numbers aooend ', numbers)
+    # print('offcut ', offcut , ' numbers ', numbers)
 
     for i in offcut[:2]:
         vid = 'direct'
         if i[2] != 0 and i[3] != 0:
-            # print('i[0] i[1] -1 ', i[0], i[1])
             a = Cut_Flat_to_Sheet(i[2], i[3], lenght_order, widht_order)
-            # print ('a1 ', a)
 
             if a == None:
                 # print('a = NONE', a)
@@ -93,21 +92,15 @@ def Request_Flat_Sheet(lenght_order, widht_order, size1, size2):
                     if i != None and isinstance(i, list):
                         offcut_app.append(i)
                 offcut_app.append(vid)
-            turn = True
-    # print('offcut app ' , offcut_app)
 
+        # print('offcut app ' , offcut_app)
 
-    # print('offcur1 ' , offcut_cur1)
-    #print('offcut2:4 ',offcut[2:4])
     for i in offcut[2:4]:
         vid = 'revers'
         if i[2] != 0 and i[3] != 0:
-            # print ('i[2] i[1] - 2 ', i[2], i[3], 'numbers befor', number_parts_app2)
             a = Cut_Flat_to_Sheet(i[2], i[3], lenght_order, widht_order)
-            # print ('a2 ', a)
 
             if a == None:
-                # print('i_1 ', i)
                 offcut_cur2.append(i[2:4])
 
             if a != None:
@@ -116,22 +109,14 @@ def Request_Flat_Sheet(lenght_order, widht_order, size1, size2):
                     if i != None and isinstance(i, list): offcut_cur2.append(i[2:4])
                     if i != None and isinstance(i, list):
                         offcut_app.append(i)
-            offcut_app.append(vid)
-            turn = True
-
-            # print('i[0] i[1] -2 ', i[0], i[1], 'numbers after', number_parts_app2)
-
-    # print('offcur2 ', offcut_cur2)
+                offcut_app.append(vid)
+                # turn = True
 
     if variant_cut[0] >= variant_cut[3]:
-        #print('offcut_all befor ', offcuts_all)
         offcuts_all.append(offcut_cur1)
-        #print('offcut_all after ', offcuts_all)
-        #print('cur1 ', offcuts_all)
 
     elif variant_cut[0] < variant_cut[3]:
         offcuts_all.append(offcut_cur2)
-        #print ('cur2')
 
     #if turn: offcuts_all.append('turn')
 
@@ -140,27 +125,38 @@ def Request_Flat_Sheet(lenght_order, widht_order, size1, size2):
     # else:
     #     offcuts_all.append(offcut_cur2)
 
-    number_parts = max((variant_cut[0] + number_parts_app1), (variant_cut[3] + number_parts_app2))
-    # print(' number parts ', (variant_cut[0] + number_parts_app1), (variant_cut[3] + number_parts_app2))
+    variant_direct_cut = variant_cut[0] + number_parts_app1
+    variant_revers_cut = variant_cut[3] + number_parts_app2
 
-    if offcut_app   and 'direct' in offcut_app:
-        pattern_cut_list = [offcut[:2], offcut_app[:2]]
+    if variant_direct_cut >= variant_revers_cut:
+        number_parts = variant_direct_cut
+        direct = True
+    else:
+        number_parts = variant_revers_cut
+        direct = False
 
-    # print (offcut_app)
-    if offcut_app:
-        if 'revers' in offcut_app:
-            # print (' helow')
-            pattern_cut_list = [offcut[2:4], offcut_app[2:4]]
 
-    if turn: pattern_cut_list.append('turn')
+    # if offcut_app:
+    #     if 'direct' in offcut_app:
+    #         pattern_cut_list = [offcut[:2], offcut_app[:2]]
+    #     if 'revers' in offcut_app:
+    #         # print (' helow')
+    #         pattern_cut_list = [offcut[2:4], offcut_app[2:4]]
+    # else:
+    #     if direct:
+    #         pattern_cut_list = [offcut[:2]]
+    #     else:
+    #         pattern_cut_list = [offcut[2:4]]
 
-    print('pattern ', pattern_cut_list)
+    # if turn: pattern_cut_list.append('turn')
+
+    # print('pattern ', pattern_cut_list)
 
     return number_parts, offcuts_all
 
 
 def calc():
-    lenght_order, widht_order = 600, 420
+    lenght_order, widht_order = 600, 400
     size1, size2 = 1050, 930
     t = Request_Flat_Sheet(lenght_order, widht_order, size1, size2)
     # for i in range (100,900, 100):
