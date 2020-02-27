@@ -1,8 +1,11 @@
 def Cut_Flat_to_Sheet(size_flat1, size_flat_2, size_order1, size_order_2):
 
     min_cut = 5
+    max_cut = 1050
+    min_flat = 420
+    max_flat = 1100
 
-    if not isinstance((size_flat1, size_flat_2, size_order_2, size_order1), int):
+    if not isinstance(size_flat1, int) or not isinstance(size_flat_2, int) or not isinstance(size_order1, int) or not isinstance(size_order_2, int):
         return  None
 
     if size_flat1 != size_flat_2:
@@ -19,7 +22,9 @@ def Cut_Flat_to_Sheet(size_flat1, size_flat_2, size_order1, size_order_2):
 
     if (length_flat // lenght_order) * (widht_flat // widht_order) == 0: # checking: order sheet must been < flat sheet
         return None
-    if 5 > lenght_order < 1050 or 5 > widht_order < 1050:
+    if min_cut > lenght_order or lenght_order > max_cut or min_cut > widht_order or widht_order > max_cut:
+        return None
+    if min_flat > length_flat or length_flat > max_flat or min_flat > widht_flat or widht_order > max_flat:
         return None
 
     lenght_cur, widht_cur = length_flat, widht_flat
@@ -125,15 +130,15 @@ def Request_Flat_Sheet(lenght_order, widht_order, size1, size2):
 
 
 def calc():
-    lenght_order, widht_order = 4, 220
-    size1, size2 = 'yyyy', 900
+    lenght_order, widht_order = 210, 310
+    size1, size2 = 1050, 930
     t = Request_Flat_Sheet(lenght_order, widht_order, size1, size2)
-    # for i in range (100,900, 100):
-    #     lenght_order = i
-    #     for k in range (100,900,100):
-    #         widht_order= k
-    #         t= Request_Flat_Sheet(lenght_order, widht_order, size1, size2)
-    #         print(lenght_order, widht_order, size1, size2, t)
+    for i in range (100,1050, 100):
+        lenght_order = i
+        for k in range (100,900,100):
+            widht_order= k
+            t= Request_Flat_Sheet(lenght_order, widht_order, size1, size2)
+            print(lenght_order, widht_order, size1, size2, t)
     print(lenght_order, widht_order, size1, size2, t)
 
 
